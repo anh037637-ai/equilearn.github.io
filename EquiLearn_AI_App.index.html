@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquiLearn AI - Cyber Gradient Version</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #3B82F6 100%);
+        }
+
+        body {
+            background-color: #050714;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .btn-gradient {
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+        }
+
+        .input-cyber {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .input-cyber:focus {
+            border-color: #ec4899;
+            background: rgba(236, 72, 153, 0.05);
+            outline: none;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+        }
+
+        .hk-label {
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #94a3b8;
+        }
+
+        .tab-btn {
+            position: relative;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: white;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+        .hs-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: #64748b;
+            margin-bottom: 2px;
+            display: block;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="flex flex-col lg:flex-row justify-between items-center mb-10 gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3">
+                    <i class="fas fa-brain text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black italic tracking-tighter">EquiLearn <span class="gradient-text">AI</span></h1>
+                    <p class="text-[10px] text-slate-500 font-extrabold uppercase tracking-[0.3em]">Smart Education System | Nhóm 8A2</p>
+                </div>
+            </div>
+
+            <nav class="flex bg-white/5 p-1 rounded-2xl border border-white/5">
+                <button onclick="changePage('input')" id="nav-input" class="tab-btn active">NHẬP LIỆU</button>
+                <button onclick="changePage('analysis')" id="nav-analysis" class="tab-btn">PHÂN TÍCH AI</button>
+                <button onclick="changePage('kanban')" id="nav-kanban" class="tab-btn">QUẢN LÝ</button>
+            </nav>
+        </header>
+
+        <!-- PAGE 1: INPUT -->
+        <div id="page-input" class="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+                
+                <!-- Bảng điểm trung tâm -->
+                <div class="xl:col-span-3 glass-card overflow-hidden">
+                    <div class="p-6 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
+                        <h3 class="font-bold flex items-center gap-3">
+                            <i class="fas fa-list-ol text-pink-500"></i> Bảng điểm chi tiết 2 Học kỳ
+                        </h3>
+                        <div class="flex gap-2">
+                            <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-pink-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="p-4 text-left text-[11px] font-black uppercase text-slate-500 border-r border-white/5">Môn học</th>
+                                    <th colspan="3" class="hk-label text-center py-2 border-b border-white/5 border-r border-white/10">HỌC KỲ 1</th>
+                                    <th colspan="3" class="hk-label text-center py-2 border-b border-white/5">HỌC KỲ 2</th>
+                                </tr>
+                                <tr class="text-[9px] font-black text-slate-600 text-center bg-white/[0.01]">
+                                    <th class="p-2 border-r border-white/5">HS1</th>
+                                    <th class="p-2 border-r border-white/5">HS2</th>
+                                    <th class="p-2 border-r border-white/10">HS3</th>
+                                    <th class="p-2 border-r border-white/5">HS1</th>
+                                    <th class="p-2 border-r border-white/5">HS2</th>
+                                    <th class="p-2">HS3</th>
+                                </tr>
+                            </thead>
+                            <tbody id="score-rows">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cột bên phải: Civilization & Eval -->
+                <div class="space-y-6">
+                    <!-- Civilization Ombre Card -->
+                    <div class="glass-card p-6 border-2 border-transparent bg-clip-padding relative" style="background-image: linear-gradient(#0f172a, #0f172a), var(--primary-gradient); background-origin: border-box; background-clip: padding-box, border-box;">
+                        <h4 class="text-xs font-black text-white uppercase mb-4 text-center tracking-widest">ĐIỂM VĂN MINH</h4>
+                        <input type="number" id="civil-score" class="w-full bg-transparent border-none text-5xl font-black text-center text-white outline-none placeholder-white/20" placeholder="0">
+                        <div class="mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-white/40 w-2/3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Evaluated Subjects -->
+                    <div class="glass-card p-6">
+                        <h4 class="text-xs font-black text-slate-400 uppercase mb-4 flex items-center gap-2">
+                            <i class="fas fa-tasks text-blue-400"></i> Môn đánh giá
+                        </h4>
+                        <div id="eval-list" class="space-y-3">
+                            <!-- JS Populated -->
+                        </div>
+                    </div>
+
+                    <button onclick="runAnalysis()" class="btn-gradient w-full py-4 rounded-2xl font-black text-white text-lg tracking-widest uppercase shadow-2xl">
+                        PHÂN TÍCH EQUILEARN
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: ANALYSIS -->
+        <div id="page-analysis" class="hidden animate-in fade-in zoom-in-95 duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Prob Card -->
+                <div class="glass-card p-10 text-center flex flex-col items-center justify-center border-t-4 border-pink-500">
+                    <p class="text-xs font-black text-slate-500 uppercase mb-6">Xác suất thành công học kỳ tới</p>
+                    <div class="relative w-56 h-56 flex items-center justify-center">
+                        <canvas id="gaugeChart"></canvas>
+                        <div id="probText" class="absolute text-5xl font-black gradient-text">0%</div>
+                    </div>
+                    <div class="mt-8">
+                        <h3 id="ai-status" class="text-xl font-bold mb-2">Đang chờ xử lý...</h3>
+                        <p id="ai-feedback" class="text-xs text-slate-400 leading-relaxed italic">Vui lòng cung cấp dữ liệu điểm số để AI khởi động bộ máy dự báo công bằng.</p>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="md:col-span-2 glass-card p-8">
+                    <h4 class="text-xs font-black text-slate-500 uppercase mb-8 flex justify-between">
+                        Thống kê phân bổ điểm số <span>Dataset N=40</span>
+                    </h4>
+                    <div class="h-64 mb-8">
+                        <canvas id="histoChart"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">Mean (TB)</p>
+                            <p id="stat-mean" class="text-xl font-black text-purple-400">0.0</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">Median (TV)</p>
+                            <p id="stat-median" class="text-xl font-black text-pink-400">0.0</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">Civ Level</p>
+                            <p id="stat-civ" class="text-xl font-black text-blue-400">0</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">Evaluated</p>
+                            <p id="stat-eval" class="text-xl font-black text-emerald-400">0/6</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: KANBAN -->
+        <div id="page-kanban" class="hidden animate-in slide-in-from-right duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 border-l-4 border-slate-600">
+                    <h5 class="text-xs font-black text-slate-500 uppercase mb-6 flex items-center gap-2"><i class="fas fa-hourglass-start"></i> Cần làm</h5>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5 text-sm">Gửi báo cáo cho giáo viên bộ môn</div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5 text-sm">Chuẩn bị lời dẫn thuyết trình</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 border-l-4 border-indigo-500 bg-indigo-500/5">
+                    <h5 class="text-xs font-black text-indigo-400 uppercase mb-6 flex items-center gap-2"><i class="fas fa-spinner animate-spin"></i> Đang thực hiện</h5>
+                    <div class="p-4 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-sm font-bold">Hoàn thiện mã nguồn App (V.Ombre)</div>
+                </div>
+                <div class="glass-card p-6 border-l-4 border-emerald-500 bg-emerald-500/5">
+                    <h5 class="text-xs font-black text-emerald-400 uppercase mb-6 flex items-center gap-2"><i class="fas fa-check-double"></i> Đã xong</h5>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-sm text-slate-500 line-through">Thu thập 40 dòng dữ liệu gốc</div>
+                        <div class="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-sm text-slate-500 line-through">Viết báo cáo phản biện đạo đức</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const subs = ["Toán", "Ngữ văn", "Tiếng Anh", "Lịch sử", "Địa lý", "KHTN", "GDCD", "Công nghệ", "Tin học"];
+        const evals = ["Mỹ thuật", "Âm nhạc", "Thể chất", "GCED", "CLISE", "VN Học"];
+        let gChart, hChart;
+
+        function init() {
+            const tbody = document.getElementById('score-rows');
+            subs.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-white/5 hover:bg-white/[0.02] transition";
+                tr.innerHTML = `
+                    <td class="p-4 text-sm font-bold border-r border-white/5">${s}</td>
+                    <td class="p-1 border-r border-white/5"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="1"></td>
+                    <td class="p-1 border-r border-white/5"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="2"></td>
+                    <td class="p-1 border-r border-white/10"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="3"></td>
+                    <td class="p-1 border-r border-white/5"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="1"></td>
+                    <td class="p-1 border-r border-white/5"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="2"></td>
+                    <td class="p-1"><input type="number" step="0.1" class="input-cyber w-full rounded-lg p-2 sc-in" data-hs="3"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const evalDiv = document.getElementById('eval-list');
+            evals.forEach(e => {
+                const d = document.createElement('div');
+                d.className = "flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5 transition hover:border-blue-500/30";
+                d.innerHTML = `<span class="text-xs font-bold text-slate-300">${e}</span>
+                               <select class="bg-slate-900 text-[10px] font-black text-emerald-400 rounded-lg px-3 py-1 outline-none eval-in">
+                                    <option value="1">ĐẠT</option>
+                                    <option value="0">CHƯA ĐẠT</option>
+                               </select>`;
+                evalDiv.appendChild(d);
+            });
+
+            // Init Charts
+            const ctxG = document.getElementById('gaugeChart').getContext('2d');
+            gChart = new Chart(ctxG, {
+                type: 'doughnut',
+                data: { datasets: [{ data: [0, 100], backgroundColor: ['#EC4899', '#1e293b'], borderWidth: 0, cutout: '85%', borderRadius: 20 }] },
+                options: { plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: false }
+            });
+
+            const ctxH = document.getElementById('histoChart').getContext('2d');
+            hChart = new Chart(ctxH, {
+                type: 'bar',
+                data: { 
+                    labels: ['0-2', '2-4', '4-6', '6-8', '8-10'], 
+                    datasets: [{ data: [0,0,0,0,0], backgroundColor: '#8B5CF6', borderRadius: 8, barThickness: 40 }] 
+                },
+                options: { 
+                    plugins: { legend: { display: false } }, 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    scales: { 
+                        x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: 'bold' } } }, 
+                        y: { display: false } 
+                    } 
+                }
+            });
+        }
+
+        function changePage(pid) {
+            ['input', 'analysis', 'kanban'].forEach(p => {
+                document.getElementById('page-'+p).classList.add('hidden');
+                document.getElementById('nav-'+p).classList.remove('active');
+            });
+            document.getElementById('page-'+pid).classList.remove('hidden');
+            document.getElementById('nav-'+pid).classList.add('active');
+        }
+
+        function runAnalysis() {
+            const inputs = document.querySelectorAll('.sc-in');
+            let scores = [];
+            inputs.forEach(i => { if(i.value) scores.push(parseFloat(i.value)); });
+
+            if(scores.length === 0) return alert("Vui lòng nhập ít nhất một đầu điểm!");
+
+            const civil = parseFloat(document.getElementById('civil-score').value) || 0;
+            const evalPass = Array.from(document.querySelectorAll('.eval-in')).filter(s => s.value === "1").length;
+
+            // Math Logic
+            const mean = scores.reduce((a,b)=>a+b, 0) / scores.length;
+            const sorted = [...scores].sort((a,b)=>a-b);
+            const median = sorted[Math.floor(sorted.length/2)];
+
+            // Prob Algorithm: Fairness Weight
+            let prob = (mean/10)*50 + (Math.min(civil, 100)/100)*25 + (evalPass/evals.length)*25;
+            prob = Math.min(Math.round(prob), 100);
+
+            // UI Updates
+            document.getElementById('probText').innerText = prob + "%";
+            document.getElementById('stat-mean').innerText = mean.toFixed(1);
+            document.getElementById('stat-median').innerText = median.toFixed(1);
+            document.getElementById('stat-civ').innerText = civil;
+            document.getElementById('stat-eval').innerText = evalPass + "/6";
+
+            gChart.data.datasets[0].data = [prob, 100-prob];
+            gChart.update();
+
+            const bins = [0,0,0,0,0];
+            scores.forEach(s => {
+                if(s >= 8) bins[4]++; else if(s >= 6) bins[3]++; else if(s >= 4) bins[2]++; else if(s >= 2) bins[1]++; else bins[0]++;
+            });
+            hChart.data.datasets[0].data = bins;
+            hChart.update();
+
+            const status = document.getElementById('ai-status');
+            const feedback = document.getElementById('ai-feedback');
+            if(prob > 80) {
+                status.innerText = "Lộ trình hoàn hảo!";
+                feedback.innerText = "Hệ thống nhận thấy sự cân bằng rất cao giữa điểm số và chỉ số văn minh của bạn.";
+            } else {
+                status.innerText = "Cần tối ưu hóa nỗ lực";
+                feedback.innerText = "Bạn có thể nâng xác suất thành công bằng cách tập trung vào các môn đánh giá và điểm Civ.";
+            }
+
+            changePage('analysis');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
